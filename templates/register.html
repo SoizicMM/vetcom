@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if erreur %}
+<p class="text-red-600 text-center text-lg pt-2">{{ erreur }}</p>
+{% endif %}
+
+<div class="py-10 flex items-center justify-center" >
+  <form method="POST" action="" class="bg-white px-10 py-6 rounded shadow-md" >
+    <div class="mb-4">
+      <label class="block">Utilisateur</label>
+      <input name="utilisateur" type="text" placeholder="Entre ton nom" class="shadow rounded p-2 border border-teal-200 focus:outline-teal-400">
+    </div>
+    <div class="mb-4">
+      <label class="block">Mot de passe</label>
+      <input name="mot_de_passe" type="password" placeholder="Mot de passe" class="shadow rounded p-2 border border-teal-200 focus:outline-teal-400">
+    </div>
+    <div class="mb-4">
+      <label class="block">Confirmation de mot de passe</label>
+      <input name="verif_mot_de_passe" type="password" placeholder="Retape ton mot de passe" class="shadow rounded p-2 border border-teal-200 focus:outline-teal-400">
+    </div>
+     <div class="mb-4">
+    <label class="block">Adresse e-mail</label>
+    <input name="e-mail" type="text" placeholder="Adresse e-mail" class="shadow rounded p-2 border border-teal-200 focus:outline-teal-400">
+         
+
+   <div class="mb-4">
+        <label class="block">Numéro de téléphone</label>
+        <input name="utilisateur" type="text" placeholder="Numéro de téléphone" class="shadow rounded p-2 border border-teal-200 focus:outline-teal-400">
+      </div>
+      
+      <button type="submit" class="bg-teal-400 px-4 py-2 rounded hover:bg-green-800 font-semibold ">Créer un compte</button>
+
+    </div>
+  </form>
+</div>
+{% endblock %}

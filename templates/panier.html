@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="text-left pl-9 pt-2 pr-8">
+  <h1 class="text-black text-3xl">Mon panier</h1>
+  <div class="text-end">
+    <a href="/">Continuer mes achats</a>
+  </div>
+  <hr/>
+  <p>Article</p><p class="text-end pr-8">Prix</p>
+  <br><br><br>
+  <hr/>
+  <br>
+  <div id="promoInfo" class="mb-3 d-none">
+    <p id="promoCode" class="text-end"></p>
+    <p id="promoDiscount" class="text-end"></p>
+  </div>
+  <form id="promoForm">
+    <div class="form-group">
+      <label for="code_promo" class="col-form-label pr-3">Code promo :</label>
+      <input type="text" class="form-control pl-1 bg-slate-200" id="code_promo" name="code_promo" placeholder="Insérer un code promo" minlength="0" maxlength="20" size="10">
+      <small id="message" class="d-none"></small>
+    </div>
+    <button type="submit" class="btn btn-primary">Valider</button>
+  </form>
+
+  <script>
+    document.getElementById("promoForm").addEventListener("submit", function(event) {
+      // Empêche la soumission du formulaire par défaut
+      event.preventDefault();
+
+      // Récupère la valeur du champ de code promo
+      var codePromo = document.getElementById("code_promo").value.trim();
+
+      // Validation personnalisée du code promo (par exemple, vérification d'une liste de codes autorisés)
+      var codesAutorises = ["WELCOME1"]; // Remplacez ceci par vos codes autorisés
+
+      var messageElement = document.getElementById("message");
+      var promoInfoElement = document.getElementById("promoInfo");
+      var promoCodeElement = document.getElementById("promoCode");
+      var promoDiscountElement = document.getElementById("promoDiscount");
+
+      if (codePromo.length === 0) {
+        // Si aucun code promo n'est saisi, ne rien afficher
+        messageElement.classList.add("d-none");
+      } else if (codesAutorises.includes(codePromo.toUpperCase())) {
+        // Si le code est valide, affiche un message de succès et la remise
+        messageElement.classList.remove("text-danger");
+        messageElement.classList.add("text-success");
+        messageElement.textContent = "Code promo ajouté à votre commande.";
+        messageElement.classList.remove("d-none");
+
+        promoInfoElement.classList.remove("d-none");
+        promoCodeElement.textContent = "Code promo : " + codePromo;
+        promoDiscountElement.textContent = "Remise : 10%";
+      } else {
+        // Sinon, affiche un message d'erreur
+        messageElement.classList.remove("text-success");
+        messageElement.classList.add("text-danger");
+        messageElement.textContent = "Veuillez indiquer un code promo valide.";
+        messageElement.classList.remove("d-none");
+      }
+    });
+
+    // Mettre à jour le montant total
+    var totalElement = document.querySelector(".total");
+    totalElement.textContent = "Total : 100€";
+  </script>
+
+  <style>
+    .text-success {
+      color: green;
+    }
+
+    .text-danger {
+      color: red;
+    }
+  </style>
+
+  <p class="text-end pr-8 total"></p>
+</div>
+{% endblock %}
