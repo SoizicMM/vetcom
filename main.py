@@ -19,6 +19,10 @@ def login():
 def register():
   return render_template("register.html")
 
+@app.route("/logout")
+def logout():
+  return render_template("index.html")
+
 
 # FRONT
 @app.route("/categories")
