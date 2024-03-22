@@ -5,9 +5,13 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <script src="https://cdn.tailwindcss.com"></script>
-      <title>👕  Ivetcom</title>
+      <link href="static/style.css" rel="stylesheet"/>
+       <script src="static/app.js"></script> 
 
+      
+      <title>👕  Ivetcom</title>
       <style>
+        /* TOUCHE PAS A CE CSS */
           body {
               font-family: Arial, sans-serif;
               text-align: center;
@@ -56,10 +60,10 @@
         nav ul li a:hover {
             color: #ffcc00; /* Couleur de survol */
         }
+    
       </style>
     </head>
     <body>
-
       <!-- debut de mon code-->
       <!-- debut haut de page-->
       <header class="p-5 bg-black text-yellow-100 ">
@@ -83,15 +87,21 @@
       <p class="text-center text-2xl text-yellow-100">Profiter de -10% avec le code WELCOME1</p>
     </header>
     <br>
-
   </body>
   <main>
   {% block content %}
   {% endblock %}
   </main>
-  <footer class="p-5 bg-black text-yellow-100 text-center">
-    <p>Copyright magicdevs&copy;</p>
-    <p>Contact : ivetcom@gmail.com</p>
-  </footer>
+      <footer class="p-5 bg-black text-yellow-100 text-center" style="display: flex; justify-content: center; align-items: center;">
+          <p style="margin: 0 10px;">Copyright : magicdevs&copy;</p>
+          <p style="margin: 0 10px;">｜</p>
+          <a style="margin: 0 10px;" href="/cookies">Paramètres de cookies</a>
+          <p style="margin: 0 10px;">｜</p>
+          <a style="margin: 0 10px;" href="mailto:ivetcom@gmail.com">Contact : ivetcom@gmail.com</a>
+          <p style="margin: 0 10px;">｜</p>
+          <a href='/assistance' style="margin: 0 10px;">
+              <img src='https://i.postimg.cc/HWN7nrb7/assistance.png' border='0' alt='assistance'/>
+          </a>
+      </footer>
 </body>
 </html>

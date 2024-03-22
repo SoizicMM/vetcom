@@ -37,7 +37,7 @@ def panier():
 #CATEGORIES
 @app.route("/homme")
 def homme():
-  return render_template("homme.html")
+  return render_template("articles.html")
 @app.route("/femme")
 def femme():
   return render_template("femme.html")
@@ -47,6 +47,22 @@ def enfant():
 @app.route("/accessoire")
 def accessoire():
   return render_template("accessoire.html")
+
+@app.route("/assistance")
+def assistance():
+  return render_template("assistance.html")
+  
+@app.route("/validation")
+def validation():
+  return render_template("validation.html")
+
+@app.route("/payment")
+def payment():
+  return render_template("payment.html")
+
+@app.route('/adm')
+def adm_page():
+    return render_template('adm.html')
 
 
 
