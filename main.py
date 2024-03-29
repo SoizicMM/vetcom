@@ -1,8 +1,17 @@
 from flask import Flask, render_template, request, url_for, redirect, session 
 
+import pymongo
+import os
 
 
 app = Flask("IVetCom")
+mongo = pymongo.MongoClient(os.getenv("MONGO_KEY"))
+
+@app.route("/test")
+def test():
+  db_test = mongo.db.test
+  test = db_test.find({})
+  return render_template("test.html", test=test)
 
 # ACCUEIL
 @app.route("/")
@@ -64,7 +73,9 @@ def payment():
 def adm_page():
     return render_template('adm.html')
 
-
+@app.route('/teset')
+def teset():
+    return render_template('testperso.html')
 
 @app.route("/settings")
 def settings():
