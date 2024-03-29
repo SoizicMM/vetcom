@@ -7,30 +7,44 @@
 {% endif %}
 
 <div class="py-10 flex items-center justify-center" >
-  <form method="POST" action="" class="bg-white px-10 py-6 rounded shadow-md" >
+  <form method="POST" action="" class="bg-white px-32 py-32 rounded shadow-md" >
+    
+    
+    <div class="mb-4">
+      <label class="block">Nom</label>
+      <input name="Nom" type="text" placeholder="Numéro de téléphone" class="shadow rounded p-2 border border-red-500focus:outline-teal-400">
+    </div>
+
+
+    <div class="mb-4">
+      <label class="block">Prénom</label>
+      <input name="Prénom" type="text" placeholder="Numéro de téléphone" class="shadow rounded p-2 border border-red-500focus:outline-teal-400">
+    </div>
+
+    
     <div class="mb-4">
       <label class="block">Utilisateur</label>
-      <input name="utilisateur" type="text" placeholder="Entre ton nom" class="shadow rounded p-2 border border-teal-200 focus:outline-teal-400">
+      <input name="utilisateur" type="text" placeholder="Entre ton nom" class="shadow rounded p-2 border border-red-500focus:outline-teal-400">
     </div>
     <div class="mb-4">
       <label class="block">Mot de passe</label>
-      <input name="mot_de_passe" type="password" placeholder="Mot de passe" class="shadow rounded p-2 border border-teal-200 focus:outline-teal-400">
+      <input name="mot_de_passe" type="password" placeholder="Mot de passe" class="shadow rounded p-2 border border-red-500focus:outline-teal-400">
     </div>
     <div class="mb-4">
       <label class="block">Confirmation de mot de passe</label>
-      <input name="verif_mot_de_passe" type="password" placeholder="Retape ton mot de passe" class="shadow rounded p-2 border border-teal-200 focus:outline-teal-400">
+      <input name="verif_mot_de_passe" type="password" placeholder="Retape ton mot de passe" class="shadow rounded p-2 border border-red-500focus:outline-teal-400">
     </div>
      <div class="mb-4">
     <label class="block">Adresse e-mail</label>
-    <input name="e-mail" type="text" placeholder="Adresse e-mail" class="shadow rounded p-2 border border-teal-200 focus:outline-teal-400">
+    <input name="e-mail" type="text" placeholder="Adresse e-mail" class="shadow rounded p-2 border border-red-500focus:outline-teal-400">
      </div>
          
 
    <div class="mb-4">
         <label class="block">Numéro de téléphone</label>
-        <input name="utilisateur" type="text" placeholder="Numéro de téléphone" class="shadow rounded p-2 border border-teal-200 focus:outline-teal-400">
+        <input name="Numéro_de_tel" type="text" placeholder="Numéro de téléphone" class="shadow rounded p-2 border border-red-500focus:outline-teal-400">
       </div>
-      
+
       <button type="submit" class="bg-green-800 px-4 py-2 rounded hover:bg-green-800 font-semibold text-white ">Créer un compte</button>
 
     </div>
