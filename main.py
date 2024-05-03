@@ -22,10 +22,28 @@ def index():
 
 
 # UTILISATEURS
-@app.route("/login")
+@app.route('/login', methods=['POST', 'GET'])
 def login():
-  return render_template("login.html")
+    # si on essaye de se connecter ca veut dire qu'on viens dans la methode POST
+    if request.method == 'POST':
+      db_utils = mongo.db.utilisateurs
+      util = db_utils.find_one({'email': request.form['email']})
+      #si l'utilisateur existe 
+      if util:
+        #verification du mdp
+        if bcrypt.checkpw(request.form['mot_de_passe'].encode('utf-8'),util['mdp']): 
+          session['util'] = request.form['email']
+          return redirect(url_for("index"))
+        #sinon le mdp est incorrect
+        else: 
+          return render_template('login.html', erreur= "le mot de passe est incorrect")
+      #sinon l'utilisateur n'existe pas 
+      else:
+        return render_template('login.html', erreur = "l'utilisateur n'existe pas")
+    else: 
+      return render_template('login.html')
 
+     
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     # Si on essaye de soumettre un formulaire
@@ -97,7 +115,7 @@ def accessoire():
 @app.route("/assistance")
 def assistance():
   return render_template("assistance.html")
-  
+
 @app.route("/validation")
 def validation():
   return render_template("validation.html")
