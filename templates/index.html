@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<!-- A REVOIR : doit etre dans la base.html -->
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boutique de vêtements</title>
@@ -8,11 +9,56 @@
     
 </head>
 <body class="bg-cover bg-center" style="background-image: url('https://img.freepik.com/vecteurs-premium/conception-couverture-fond-degrade-vert-illustration-vectorielle_797523-908.jpg')">
-    <div class="h-screen flex items-center justify-center">
-        <h1 class="text-6xl text-yellow-100 font-bold">Bienvenue dans notre boutique de vêtements</h1>
-    </div>
+
+  <div class="flex items-center justify-center">
+      <h1 class="text-6xl text-yellow-100 font-bold py-12">Bienvenue dans notre boutique de vêtements</h1>
+  </div>
+  <!-------------------->
+  <!-----DIAPORAMA------>
+  <!-------------------->
+ 
+  <section class="slide">
+      <!-- Conteneur des "diapos" -->
+      <div class="elements">
+          <!-- Première diapo -->
+          <div class="element active">
+             <img src="static/images/slide/index-slide01.jpg" class="img-fluid pt-4" alt="slide accueil"/>
+              <div class="caption">
+                  <h2>Image 1</h2>
+                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis, saepe.</p>
+              </div>
+          </div>
+          <!-- Deuxième diapo -->
+          <div class="element">
+              <img src="static/images/slide/index-slide02.jpg" class="img-fluid pt-4" alt="slide accueil"/>
+              <div class="caption">
+                  <h2>Image 2</h2>
+                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis, saepe.</p>
+              </div>
+          </div>
+          <!-- Troisième diapo -->
+          <div class="element">
+              <img src="static/images/slide/index-slide03.jpg" class="img-fluid pt-4" alt="slide accueil"/>
+              <div class="caption">
+                  <h2>Image 3</h2>
+                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis, saepe.</p>
+              </div>
+          </div>
+      </div>
+      <!-- Flèches de navigation -->
+      <i id="nav-gauche" class="las la-chevron-left"></i>
+      <i id="nav-droite" class="las la-chevron-right"></i>
+  </section>
+  
+  <!-------------------------->
+  <!------FIN DIAPORAMA------->
+  <!-------------------------->
+
+
 </body>
      </div> 
+
+
 
 
   

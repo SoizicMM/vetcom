@@ -18,3 +18,217 @@
   color: white;
 }
 
+/* promo */
+.promo {
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  padding-top: 10px;
+}
+
+/*******************/
+/* menu categories */
+/*******************/
+.categories {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+  background: #edf0bc50; 
+  box-shadow: inset 0px -1px 0px #c5c5c6;
+}
+
+.nav-container a {
+  margin: 0 10px;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #414141;
+  display: inline-block;
+  position: relative;
+}
+
+.nav-container a::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  transform: scale(0);
+  transform-origin: left;
+  background: #edf0bc;
+  transition: transform 0.3s ease-out;
+}
+.nav-container a:hover::after {
+  transform: scaleX(1);
+}
+
+nav > ul > li{
+  float: left;
+  position: relative;
+}
+
+.cat:hover{
+  border-left: 3px solid #edf0bc70;
+}
+
+nav > ul::after{
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+nav a{
+  display: block;
+}
+
+.sous-menu {
+  display: none;
+  position: absolute;
+  text-align : left;
+  width: 90%;
+  padding-top: 20px;
+  padding-left: 5px;
+
+  /* pour que les sous menu s'affichent au dessus du texte du corps de page */
+  z-index: 1000;
+}
+
+/* je cible le menu burger via son type d'input */
+nav input[type=checkbox]{
+  display: none;
+}
+
+nav label{
+  display:none;
+}
+
+
+nav > ul li:hover .sous-menu{
+  display: block;
+}
+
+
+.sous-menu li a {
+  font-size: 16px;
+  color: #414141;
+  witdh: 470px;
+  padding-bottom: 5px;
+  padding-top: 2px;
+}
+
+.sous-menu li{
+  float: none;
+  width: 300px;
+  text-align: left;
+  background-color: #edf0bc70;
+  /**************/
+  /*
+  background: -moz-linear-gradient(#edf0bc90, #edf0bc70);
+  background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #edf0bc70),color-stop(1, #edf0bc90));
+  background: -webkit-linear-gradient(#edf0bc90, #edf0bc70);
+  background: -o-linear-gradient(#edf0bc90, #edf0bc70);
+  background: -ms-linear-gradient(#edf0bc90, #edf0bc70);
+  background: linear-gradient(#edf0bc90, #edf0bc70);
+  */
+  /****************/
+  padding-bottom: 5px;
+}
+.sous-menu li:hover{
+  background-color: #edf0bc;
+}
+
+.sous-menu li a:hover{
+  color : #1f1e1e;
+}
+
+
+/* menu burger */
+nav input[type=checkbox]:checked ~ ul{
+  display: block;
+}
+@media screen and (max-width: 780px){
+  .menu-mobile{
+    display: block;
+    color: #414141;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 20px;
+  }
+  .nav-container{
+    display: none;
+    width: 100%;
+    text-align: center;
+  }
+  .categories{
+    display: block;
+  }
+  nav ul li, nav ul li a{
+    width: 100%;
+    text-align: center;
+  }
+  nav ul li a, nav ul li:hover a{
+    padding: 10px 0;
+  }
+  li:hover .sous-menu{
+    display: block;
+    position: static;
+  }
+  .sous-menu li{
+    float: none;
+    width: 110%;
+    text-align: center;
+    background-color: #edf0bc50;
+    padding-bottom: 5px;
+  }
+}
+
+/*****************/
+/*** diaporama ***/
+/*****************/
+.slide{
+    position: relative;
+    overflow: hidden;
+}
+
+#nav-droite, #nav-gauche{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 3em;
+}
+
+#nav-droite{
+    right: 20px;
+}
+#nav-gauche{
+    left: 20px;
+}
+
+.elements{
+    display: flex;
+    transition: 1s linear;
+}
+
+.element{
+    flex: 1 0 100%;
+    position: relative;
+}
+
+.element > img{
+    width: 100%;
+}
+
+.caption{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(255,255,255,0.4);
+    padding: 30px;
+}

@@ -6,10 +6,18 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <script src="https://cdn.tailwindcss.com"></script>
       <link href="static/style.css" rel="stylesheet"/>
-       <script src="static/app.js"></script> 
+      <script defer src="static/app.js"></script>
+      <!-- promo -->
+      <script defer src="{{ url_for('static', filename='promo.js') }}"></script>
+      <script defer src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+          crossorigin="anonymous"></script>
+      <!-- diaporama -->
+      <script defer src="{{ url_for('static', filename='slide.js') }}"></script>
+      <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
       
-      <title>👕  Ivetcom</title>
+      <title>👕  Ivetcom </title>
       <style>
         /* TOUCHE PAS A CE CSS */
           body {
@@ -35,29 +43,29 @@
             padding: 10px 0;
         }
 
-        nav ul {
+        .nav ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
         }
 
-        nav ul li {
+        .nav ul li {
             display: inline-block;
             margin-right: 200px; /* Ajout de la marge droite de 50 pixels */
         }
 
-        nav ul li:last-child {
+        .nav ul li:last-child {
             margin-right: 0; /* Pour éviter une marge à droite sur le dernier élément */
         }
 
-        nav ul li a {
+        .nav ul li a {
             text-decoration: none;
             color: #fff;
             font-weight: bold;
             font-size: 16px;
         }
 
-        nav ul li a:hover {
+        .nav ul li a:hover {
             color: #ffcc00; /* Couleur de survol */
         }
     
@@ -67,9 +75,10 @@
       <!-- debut de mon code-->
       <!-- debut haut de page-->
       <header class="p-5 bg-black text-yellow-100 ">
+        <!-- BANDEAU DU HAUT -->
         <h1 class="text-5xl text-left">Ivetcom</h1>
         <p class="text-left">La marque des magicdevs</p>
-        <pav>
+        <nav>
           <ul class="flex flex flex-row-reverse space-x-4 space-x-reverse text-xl font-medium">
             <li><a href="/panier">Panier</a></li>
             <li><a href="/register">S'inscrire</a></li>
@@ -81,11 +90,53 @@
                 </form>
             </div>
           </ul>
-        </pav>
+        </nav>
       </header>
-    <header>
-      <p class="text-center text-2xl text-yellow-100">Profiter de -10% avec le code WELCOME1</p>
-    </header>
+        <!-- CODE PROMO -->
+      <section class="bg-[#333] h-12">
+        <p class="text-center text-2xl text-yellow-100 promo" aria-label="Profiter de -10% avec le code WELCOME1"></p>
+      </section>
+      <!-- MENU CATEGORIES -->
+      <nav class="categories">
+          <!-- partie mobile -->
+          <label for="menu-mobile" class="menu-mobile">MENU</label>
+          <input type="checkbox" id="menu-mobile" role="button">
+          <ul class="nav-container">
+            <li class="cat"><a href="#" aria-current="page">Home</a></li>
+            <li class="cat"><a href="#">Hommes</a>
+                <ul class="sous-menu">
+                    <li><a href="#">Tshirts</a></li>
+                    <li><a href="#">Pulls</a></li>
+                    <li><a href="#">Pantalons</a></li>
+                    <li><a href="#">Chaussures</a></li>
+                </ul>
+            </li>
+            <li class="cat"><a href="#">Femmes</a>
+                <ul class="sous-menu">
+                    <li><a href="#">Tshirts</a></li>
+                    <li><a href="#">Pulls</a></li>
+                    <li><a href="#">Pantalons</a></li>
+                    <li><a href="#">Chaussures</a></li>
+                </ul>
+            </li>
+            <li class="cat"><a href="#">Enfants</a>
+                <ul class="sous-menu">
+                    <li><a href="#">Tshirts</a></li>
+                    <li><a href="#">Pulls</a></li>
+                    <li><a href="#">Pantalons</a></li>
+                    <li><a href="#">Chaussures</a></li>
+                </ul>
+            </li>
+            <li class="cat"><a href="#">Accessoires</a>
+                <ul class="sous-menu">
+                    <li><a href="#">Montres</a></li>
+                    <li><a href="#">Bagues</a></li>
+                    <li><a href="#">Bracelets</a></li>
+                    <li><a href="#">Colliers</a></li>
+              </ul>
+            </li>
+          </ul>
+      </nav>
     <br>
   </body>
   <main>
