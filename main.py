@@ -9,12 +9,6 @@ mongo = pymongo.MongoClient(os.getenv("MONGO_KEY"))
 app.secret_key = os.getenv("COOKIES_KEY")
 
 
-@app.route("/test")
-def test():
-  db_test = mongo.db.test
-  test = db_test.find({})
-  return render_template("test.html", test=test)
-
 # ACCUEIL
 @app.route("/")
 def index():
@@ -22,10 +16,28 @@ def index():
 
 
 # UTILISATEURS
-@app.route("/login")
+@app.route('/login', methods=['POST', 'GET'])
 def login():
-  return render_template("login.html")
+    # si on essaye de se connecter ca veut dire qu'on viens dans la methode POST
+    if request.method == 'POST':
+      db_utils = mongo.db.utilisateurs
+      util = db_utils.find_one({'email': request.form['email']})
+      #si l'utilisateur existe 
+      if util:
+        #verification du mdp
+        if bcrypt.checkpw(request.form['mot_de_passe'].encode('utf-8'),util['mdp']): 
+          session['util'] = request.form['email']
+          return redirect(url_for("index"))
+        #sinon le mdp est incorrect
+        else: 
+          return render_template('login.html', erreur= "le mot de passe est incorrect")
+      #sinon l'utilisateur n'existe pas 
+      else:
+        return render_template('login.html', erreur = "l'utilisateur n'existe pas")
+    else: 
+      return render_template('login.html')
 
+     
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     # Si on essaye de soumettre un formulaire
@@ -81,23 +93,36 @@ def panier():
 
 
 #CATEGORIES
-@app.route("/homme")
-def homme():
-  return render_template("articles.html")
 @app.route("/femme")
 def femme():
-  return render_template("femme.html")
+  db_femme = mongo.db.femme
+  femme = db_femme.find({})
+  return render_template("femme.html", femme=femme)
+
+@app.route("/homme")
+def homme():
+  db_homme = mongo.db.homme
+  homme = db_homme.find({})
+  return render_template("homme.html", homme=homme)
+
 @app.route("/enfant")
 def enfant():
-  return render_template("enfant.html")
+  db_enfant = mongo.db.enfant
+  enfant = db_enfant.find({})
+  return render_template("enfant.html", enfant=enfant)
+
 @app.route("/accessoire")
 def accessoire():
-  return render_template("accessoire.html")
+  db_accessoire = mongo.db.accessoire
+  accessoire = db_accessoire.find({})
+  return render_template("accessoire.html", accessoire=accessoire)
 
+
+#AUTRE
 @app.route("/assistance")
 def assistance():
   return render_template("assistance.html")
-  
+
 @app.route("/validation")
 def validation():
   return render_template("validation.html")
@@ -109,10 +134,6 @@ def payment():
 @app.route('/adm')
 def adm_page():
     return render_template('adm.html')
-
-@app.route('/teset')
-def teset():
-    return render_template('testperso.html')
 
 @app.route("/settings")
 def settings():

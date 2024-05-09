@@ -25,7 +25,12 @@
     <button type="submit" class="btn btn-primary">Valider</button>
   </form>
 
+  <p class="text-end pr-8 total">Total : <span id="totalAmount">100€</span></p>
+
   <script>
+    // Prix initial du panier
+    var initialTotalAmount = 100;
+
     document.getElementById("promoForm").addEventListener("submit", function(event) {
       // Empêche la soumission du formulaire par défaut
       event.preventDefault();
@@ -40,6 +45,8 @@
       var promoInfoElement = document.getElementById("promoInfo");
       var promoCodeElement = document.getElementById("promoCode");
       var promoDiscountElement = document.getElementById("promoDiscount");
+      var totalElement = document.getElementById("totalAmount");
+      var promoInputElement = document.getElementById("code_promo");
 
       if (codePromo.length === 0) {
         // Si aucun code promo n'est saisi, ne rien afficher
@@ -54,6 +61,14 @@
         promoInfoElement.classList.remove("d-none");
         promoCodeElement.textContent = "Code promo : " + codePromo;
         promoDiscountElement.textContent = "Remise : 10%";
+
+        // Réduire le montant total en fonction de la remise
+        var discountAmount = initialTotalAmount * 0.1; // 10% de remise
+        var newTotalAmount = initialTotalAmount - discountAmount;
+        totalElement.textContent = newTotalAmount + "€";
+
+        // Vider le champ de code promo une fois qu'il a été ajouté
+        promoInputElement.value = "";
       } else {
         // Sinon, affiche un message d'erreur
         messageElement.classList.remove("text-success");
@@ -62,10 +77,6 @@
         messageElement.classList.remove("d-none");
       }
     });
-
-    // Mettre à jour le montant total
-    var totalElement = document.querySelector(".total");
-    totalElement.textContent = "Total : 100€";
   </script>
 
   <style>
@@ -77,7 +88,5 @@
       color: red;
     }
   </style>
-
-  <p class="text-end pr-8 total"></p>
 </div>
 {% endblock %}
