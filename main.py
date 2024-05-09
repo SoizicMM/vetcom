@@ -9,12 +9,6 @@ mongo = pymongo.MongoClient(os.getenv("MONGO_KEY"))
 app.secret_key = os.getenv("COOKIES_KEY")
 
 
-@app.route("/test")
-def test():
-  db_test = mongo.db.test
-  test = db_test.find({})
-  return render_template("test.html", test=test)
-
 # ACCUEIL
 @app.route("/")
 def index():
@@ -99,19 +93,32 @@ def panier():
 
 
 #CATEGORIES
-@app.route("/homme")
-def homme():
-  return render_template("articles.html")
 @app.route("/femme")
 def femme():
-  return render_template("femme.html")
+  db_femme = mongo.db.femme
+  femme = db_femme.find({})
+  return render_template("femme.html", femme=femme)
+
+@app.route("/homme")
+def homme():
+  db_homme = mongo.db.homme
+  homme = db_homme.find({})
+  return render_template("homme.html", homme=homme)
+
 @app.route("/enfant")
 def enfant():
-  return render_template("enfant.html")
+  db_enfant = mongo.db.enfant
+  enfant = db_enfant.find({})
+  return render_template("enfant.html", enfant=enfant)
+
 @app.route("/accessoire")
 def accessoire():
-  return render_template("accessoire.html")
+  db_accessoire = mongo.db.accessoire
+  accessoire = db_accessoire.find({})
+  return render_template("accessoire.html", accessoire=accessoire)
 
+
+#AUTRE
 @app.route("/assistance")
 def assistance():
   return render_template("assistance.html")
@@ -127,10 +134,6 @@ def payment():
 @app.route('/adm')
 def adm_page():
     return render_template('adm.html')
-
-@app.route('/teset')
-def teset():
-    return render_template('testperso.html')
 
 @app.route("/settings")
 def settings():

@@ -1,10 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<style>
+#progress-bar {
+  width: 100%;
+  height: 5px;
+  background-color: lightgray;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  transition: width 2s linear;
+}
+</style>
+
 <p class="text-3xl text-left pl-10 pr-10 underline text-black">Contactez-nous</p><br><br>
 <div class="bg-gray-200 pl-20 pr-20"><br><br>
 <div class="text-center text-xl">
-  <form id="contact-form" action="adm.html" method="post">
+  <form id="contact-form" action="/" method="get">
     <div class="form-group">
       <label for="nom" class="pr-5 font-bold">Nom :</label>
       <input type="text" id="nom" name="nom" class="form-control outline-dotted" required><br><br>
@@ -17,13 +30,38 @@
       <label for="message" class="font-bold">Message :</label><br><br>
       <textarea id="message" name="message" class="form-control outline-dotted" rows="4" required></textarea><br><br><br>
     </div>
-    <button type="submit" class="bg-red-400 pl-5 pt-3 pr-5 pb-3 rounded-full">Envoyer</button><br><br><br>
+    <button id="submit-btn" class="bg-red-400 pl-5 pt-3 pr-5 pb-3 rounded-full">Envoyer</button><br><br><br>
   </form>
   <div id="confirmation" style="display: none; position: fixed; bottom: 20px; right: 20px; background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);">
-    <p>Votre message a bien été envoyé.</p>
+    <p id="confirmation-message">Votre message a bien été envoyé.</p>
+    <div id="progress-bar"></div>
   </div>
 </div>
 </div>
 <br><br>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  document.getElementById('confirmation').style.display = 'block';
+  document.getElementById('progress-bar').style.width = '100%';
+
+  setTimeout(function() {
+    document.getElementById('confirmation-message').style.opacity = '0';
+    document.getElementById('progress-bar').style.width = '0';
+  }, 3000);
+
+  setTimeout(function() {
+    document.getElementById('confirmation').style.display = 'none';
+    document.getElementById('confirmation-message').style.opacity = '1';
+  }, 5000);
+
+  // Réinitialiser les champs du formulaire
+  document.getElementById('nom').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('message').value = '';
+});
+</script>
 
 {% endblock %}
