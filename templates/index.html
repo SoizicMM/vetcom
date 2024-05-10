@@ -1,15 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<!-- A REVOIR : doit etre dans la base.html -->
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boutique de vêtements</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    
-</head>
-<body class="bg-cover bg-center" style="background-image: url('https://img.freepik.com/vecteurs-premium/conception-couverture-fond-degrade-vert-illustration-vectorielle_797523-908.jpg')">
-
   <div class="flex items-center justify-center">
       <h1 class="text-6xl text-yellow-100 font-bold py-12">Bienvenue dans notre boutique de vêtements</h1>
   </div>
@@ -53,24 +43,19 @@
   <!-------------------------->
   <!------FIN DIAPORAMA------->
   <!-------------------------->
+<br><br>
+<div class="pl-5 pr-5">
+    <div class="pl-10 text-3xl text-left bg-yellow-100">
+        <p>Bienvenue sur <b>Vetcom !</b><br> Votre destination en ligne pour toute la famille. Découvrez une large             sélection de vêtements et d'accessoires tendance, pour hommes, femmes et enfants. <br><br>Parcourez notre             site convivial, commandez en toute simplicité et profitez d'une livraison rapide. <br>Exprimez votre style             avec Vetcom dès aujourd'hui !<br><br>Les Magicdevs</p>
+    </div>
+</div>
 
-
-</body>
-     </div> 
-
-  
-     <!-- <section class="grid  grid-cols-4 gap-48 p-10 ">
-       {% for annonce in annonces %}
-       <article class="bg-white text-black shadow-xl p-3 border-black border-solid border-2 rounded-lg"> 
-         <a href="/annonce/{{annonce['_id']}}">
-         <h3 class="text-xl">{{annonce['titre']}}</h3> 
-         </a>
-           <hr>
-         <p class="pt-2">Activité proposée par : <b>{{annonce['auteur']}}</b></p>
-         <p class="pt-4">{{annonce['description']|truncate(200)}}</p>
-       </article>
-       {% endfor %}
-     </section> -->
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br>
 
 
    {% endblock %}
