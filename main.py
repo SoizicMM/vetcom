@@ -8,7 +8,6 @@ app = Flask("IVetCom")
 mongo = pymongo.MongoClient(os.getenv("MONGO_KEY"))
 app.secret_key = os.getenv("COOKIES_KEY")
 
-
 # ACCUEIL
 @app.route("/")
 def index():
