@@ -2,7 +2,7 @@
 {% block content %}
 <p class="text-yellow-100 text-center text-4xl pt-2">📩 Une question ? Un problème ? Contacter nous et on serait là plus vite que Flash pour vous aider à résoudre tout ça ! 💨</p>
 <div class="py-10 flex items-center justify-center">
-  <form method="POST" action="/envoyer_message" class="bg-white px-40 py-40 rounded shadow-md">
+  <form method="POST" action="/envoyer_message" class="bg-white px-40 py-40 rounded shadow-md" id="contactForm">
     <div class="mb-4">
       <label class="block">Nom</label>
       <input name="nom" type="text" placeholder="Entre ton nom" class="shadow rounded p-2 border border-red-500 focus:outline-teal-400">
@@ -27,10 +27,19 @@
       <label class="block">Message</label>
       <input name="texte" type="text" placeholder="Inscrivez votre message, ..." class="shadow rounded p-2 border border-red-500 focus:outline-teal-400">
     </div>
+    
+    <input type="hidden" name="date_envoi" id="date_envoi">
+    
     <br><br>
     <button type="submit" class="bg-green-800 px-4 py-2 rounded hover:bg-green-800 font-semibold text-white">ENVOYER</button>
     <br>
     <p>Powered by DC Mathis</p>
   </form>
 </div>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function() {
+  document.getElementById('date_envoi').value = new Date().toISOString().slice(0, 10);  // Formate la date en 'YYYY-MM-DD'
+});
+</script>
 {% endblock %}

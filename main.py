@@ -6,6 +6,7 @@ import bcrypt
 app = Flask("Vetcom")
 mongo = pymongo.MongoClient(os.getenv("MONGO_KEY"))
 app.secret_key = os.getenv("COOKIES_KEY")
+confidentiality_code = os.environ['titi']
 
 # ACCUEIL
 @app.route("/")
@@ -123,12 +124,6 @@ def cookies():
 
 
 # ADMINISTRATION
-@app.route("/message")
-def message():
-    db_message = mongo.db.message
-    message = db_message.find({})
-    return render_template("message.html", message=message)
-
 @app.route("/envoyer_message", methods=["POST"])
 def envoyer_message():
     try:
@@ -136,6 +131,7 @@ def envoyer_message():
         prenom = request.form["prenom"]
         email = request.form["email"]
         objet = request.form["objet"]
+        date_envoi = request.form["date_envoi"]
         texte = request.form["texte"]
 
         db_message = mongo.db.message
@@ -144,12 +140,48 @@ def envoyer_message():
             "prenom": prenom,
             "email": email,
             "objet": objet,
+            "date_envoi": date_envoi,
             "texte": texte
         })
 
         return redirect(url_for("index"))
     except Exception as e:
         return str(e)
+
+
+@app.route('/administration')
+def administration():
+    return render_template('administration.html')
+
+@app.route('/loginn', methods=['POST'])
+def loginn():
+    code = request.form.get('code')
+    if code == confidentiality_code:
+        # Authentification réussie, rediriger vers la page d'administration sécurisée
+        return  redirect(url_for('secure_administration'))
+    else:
+        # Mauvais code, rediriger vers la page d'administration avec un message d'erreur
+        return redirect(url_for('administration_error'))
+
+@app.route('/administration_error')
+def administration_error():
+    return render_template('/error.html')
+
+@app.route('/secure_administration')
+def secure_administration():
+    # Code pour la page d'administration sécurisée
+    db_message = mongo.db.message
+    message = db_message.find({})
+    return render_template('/administrationadmin.html', message=message)
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=3904)

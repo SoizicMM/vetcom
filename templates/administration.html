@@ -1,0 +1,17 @@
+{% extends 'base1.html' %}
+{% block content %}
+<h1 class="text-center text-blue-700 text-3xl underline-offset-4">ACCES PAGE ADMINISTRATEUR</h1><br><br><br><br>
+    <form action="/loginn" method="POST" class="text-xl text-center">
+        <label for="code">Entrez le code de confidentialité :</label><br><br>
+        <input class="text-center bg-blue-100 text-black" type="password" id="code" name="code"><br><br>
+        <input type="submit" class="bg-black text-white rounded-lg px-4 py-2" value="Se connecter">
+    </form>
+
+<br><br>
+<p class="text-center text-red-500 text-xl">Accès restreint : Cette page est réservée aux membres authorisés. Si vous n'êtes pas autorisé à accéder à cette page, <br>veuillez retourner sur la page d'acceuil en appuyant sur le bouton ci-dessous :</p><br>
+<div class="text-center">
+  <a class="text-blue-500 bg-red-500 rounded-lg px-4 py-2" href="/">HOME</a>
+</div>
+<br><br>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base1.html' %}
+{% block content %}
+<br>
+<p class="text-yellow-100 text-center text-4xl pt-2">Message des clients</p><br><br>
+  <div class="pl-20 pr-20">
+    <section>
+      <table class="table-auto w-full border-collapse border border-gray-200">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="border border-gray-300 px-4 py-2">Nom</th>
+            <th class="border border-gray-300 px-4 py-2">Prénom</th>
+            <th class="border border-gray-300 px-4 py-2">E-mail</th>
+            <th class="border border-gray-300 px-4 py-2">Objet</th>
+            <th class="border border-gray-300 px-4 py-2">Corps du message</th>
+            <th class="border border-gray-300 px-4 py-2">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for message in message %}
+          <tr>
+            <td class="border border-gray-300 px-4 py-2">{{ message['nom'] }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ message['prenom'] }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ message['email'] }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ message['objet'] }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ message['texte'] }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ message['date_envoi'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </div>
+<br><br>
+<p class="text-yellow-100 text-center text-4xl pt-2">Autres</p><br><br>
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}
