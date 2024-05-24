@@ -82,9 +82,13 @@
         <nav>
           <ul class="flex flex flex-row-reverse space-x-4 space-x-reverse text-xl font-medium">
             <li><a href="/panier">Panier</a></li>
-            <li><a href="/register">S'inscrire</a></li>
-            <li><a class="pl-20" href="/login">Se connecter</a></li>
+               {% if session['util'] %}
+              <li><a class="pl-20" href="/logout">Se déconnecter</a></li>
+              {% else %}
+              <li><a href="/login">Se connecter</a></li>
+              <li><a href="/register">S'inscrire</a></li>
             <div class="search-container">
+                {% endif %}
                 <form action="/search" method="GET">
                     <input class="text-black pl-2" type="text" placeholder="pull, t shirt, bijoux, ..." name="q" class="search-input">
                     <button type="submit" class="text-yellow-600 search-button">Rechercher</button>
