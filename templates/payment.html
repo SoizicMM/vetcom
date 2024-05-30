@@ -1,16 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p class="text-left text-3xl underline text-black pl-10 pr-10 pt-10"">Validation de commande</p><br>
+<p class="text-left text-3xl underline text-black pl-10 pr-10 pt-10">Validation de commande</p><br>
 <div class="text-center text-black text-2xl pl-10 pr-10 pt-10">
-  <p>Vous recevrez sous 2 heures un lien PayPal par message <br><br>
-  au : .................... <br><br> et par mail à : ....................<br><br>Vous aurez 24 heures pour effectuer le paiment.<br>
+  <p>Vous recevrez sous 2 heures un lien <a class="underline" target="_blank" href='https://www.revolut.com/fr-FR/'>Revolut</a> par message <br><br>
+  au : ..............<br><br><br><p class="text-4xl">Total à payer : {{ total_amount }} €</p><br><br>Vous aurez 24 heures pour effectuer le paiement.<br>
   Sans ce paiement, votre commande ne sera pas validée par notre équipe et nous serons forcés de l'annuler.<br><br><br>
 
-  
-  <p class="text-lg">Les magicdevs vous remercions pour votre confiance.</p><br><br><br>
-<a href="/" class="text-center text-xl bg-red-100 pl-10 pr-10 pt-10">Retour à l'accueil</a><br></div>
-
-
-
+  <p class="text-lg">Les magicdevs vous remercions pour votre confiance.</p><br>
+  <a href="/" class="text-center text-xl bg-red-100 pb-5 pl-5 pr-5 pt-5">Retour à l'accueil</a><br>
+</div>
+<br><br><br>
 {% endblock %}

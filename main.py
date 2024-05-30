@@ -13,6 +13,11 @@ confidentiality_code = os.environ['titi']
 def index():
     return render_template("index.html")
 
+#ERRUER 404
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+    
 # UTILISATEURS
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -64,7 +69,9 @@ def categories():
 
 @app.route("/panier")
 def panier():
-    return render_template("panier.html")
+    db_enfant = mongo.db.enfant
+    enfant = db_enfant.find({})
+    return render_template("panier.html", enfant=enfant)
 
 # CATEGORIES
 @app.route("/femme")
@@ -101,9 +108,12 @@ def assistance():
 def validation():
     return render_template("validation.html")
 
-@app.route("/payment")
+@app.route("/payment", methods=["GET", "POST"])
 def payment():
-    return render_template("payment.html")
+    if request.method == "POST":
+        total_amount = request.form.get('totalAmount', default="0")
+        return render_template("payment.html", total_amount=total_amount)
+    return render_template("cart.html")
 
 @app.route('/adm')
 def adm_page():
@@ -160,19 +170,21 @@ def loginn():
         # Authentification réussie, rediriger vers la page d'administration sécurisée
         return  redirect(url_for('secure_administration'))
     else:
-        # Mauvais code, rediriger vers la page d'administration avec un message d'erreur
+    # Mauvais code, rediriger vers la page d'administration avec un message d'erreur
         return redirect(url_for('administration_error'))
 
 @app.route('/administration_error')
 def administration_error():
-    return render_template('/error.html')
+    return render_template('error.html')
 
 @app.route('/secure_administration')
 def secure_administration():
     # Code pour la page d'administration sécurisée
     db_message = mongo.db.message
     message = db_message.find({})
-    return render_template('/administrationadmin.html', message=message)
+    db_commande = mongo.db.commande
+    commande = db_commande.find({})
+    return render_template('/administrationadmin.html', message=message, commande=commande)
 
 
 
