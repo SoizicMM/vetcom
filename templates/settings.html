@@ -1,12 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+
+  <div>
+    <button class="bg-lime-200 text-left ml-2 mb-4 rounded w-26 h-14 py-12 px-4">
+      Paramètres
+    </button>
+  </div>
+  <button class="text-left ml-2 mb-4">
+    Se déconnecter
+  </button>
+  <button class="text-left ml-2 mb-4">
+    Mode de paiement
+  </button>
+  <button class="text-left ml-2 mb-4">
+    Compte
+  </button>
+  <button class="text-left ml-2 mb-4">
+    Supprimer le compte
+  </button>
+{% endblock %}
