@@ -42,7 +42,7 @@ def register():
         if request.form['mot_de_passe'] == request.form['verif_mot_de_passe']:
             mdp_encrypte = bcrypt.hashpw(request.form['mot_de_passe'].encode('utf-8'), bcrypt.gensalt())
             db_utils.insert_one({
-                'nom': request.form['nom'],
+                'nom' : request.form['nom'],
                 'prenom': request.form['prenom'],
                 'pseudo': request.form['pseudo'],
                 'mdp': mdp_encrypte,
@@ -73,12 +73,43 @@ def panier():
     enfant = db_enfant.find({})
     return render_template("panier.html", enfant=enfant)
 
-# CATEGORIES
+# CATEGORIES 
 @app.route("/femme")
 def femme():
     db_femme = mongo.db.femme
     femme = db_femme.find({})
     return render_template("femme.html", femme=femme)
+
+#SOUS CATEGORIE FEMME
+
+@app.route("/femme/teeshirt")
+def femme_teeshirt():
+    db_femme = mongo.db.femme
+    femme = db_femme.find_one({'categorie' : 'tee-shirt'})
+    return render_template("femme.html", femme=femme)
+
+@app.route("/femme/pantalon")
+def femme_pantalon():
+    db_femme = mongo.db.femme
+    femme = db_femme.find_one({'categorie' : 'pantalon'})
+    return render_template("femme.html", femme=femme)
+
+
+@app.route("/femme/pull")
+def femme_pull():
+    db_femme = mongo.db.femme
+    femme = db_femme.find_one({'categorie' : 'pull'})
+    return render_template("femme.html", femme=femme)
+
+@app.route("/femme/accessoire")
+def femme_accessoire():
+    db_femme = mongo.db.femme
+    femme = db_femme.find_one({'categorie' : 'chaussure'})
+    return render_template("femme.html", femme=femme)
+   
+
+
+
 
 @app.route("/homme")
 def homme():
@@ -86,17 +117,82 @@ def homme():
     homme = db_homme.find({})
     return render_template("homme.html", homme=homme)
 
+#SOUS CATEGORIE HOMME 
+
+
+@app.route("/homme/teeshirt")
+def homme_teeshirt():
+    db_homme = mongo.db.homme
+    homme = db_homme.find_one({'categorie' : 'tee-shirt'})
+    return render_template("homme.html", homme=homme)
+
+@app.route("/homme/pantalon")
+def homme_pantalon():
+    db_homme = mongo.db.homme
+    homme = db_homme.find_one({'categorie' : 'pantalon'})
+    return render_template("homme.html", homme=homme)
+
+@app.route("/homme/pull")
+def homme_pull():
+    db_homme = mongo.db.homme
+    homme = db_homme.find_one({'categorie' : 'pull'})
+    return render_template("homme.html", homme=homme)
+
+@app.route("/homme/chaussure")
+def homme_chaussure():
+    db_homme = mongo.db.homme
+    homme = db_homme.find_one({'categorie' : 'chaussure'})
+    return render_template("homme.html", homme=homme)
+
+
+
 @app.route("/enfant")
 def enfant():
     db_enfant = mongo.db.enfant
     enfant = db_enfant.find({})
     return render_template("enfant.html", enfant=enfant)
 
+#SOUS CATEGORIES ENFANT
+
+@app.route("/enfant/teeshirt")
+def enfant_teeshirt():
+    db_enfant = mongo.db.enfant
+    enfant = db_enfant.find_one({'categorie' : 'tee-shirt'})
+    return render_template("enfant.html", enfant=enfant)
+
+@app.route("/enfant/pantalon")
+def enfant_pantalon():
+    db_enfant = mongo.db.enfant
+    enfant = db_enfant.find_one({'categorie' : 'pantalon'})
+    return render_template("enfant.html", enfant=enfant)
+
+@app.route("/enfant/pull")
+def enfant_pull():
+    db_enfant = mongo.db.enfant
+    enfant = db_enfant.find_one({'categorie' : 'pull'})
+    return render_template("enfant.html", enfant=enfant)
+
+@app.route("/enfant/chaussure")
+def enfant_chaussure():
+    db_enfant = mongo.db.enfant
+    enfant = db_enfant.find_one({'categorie' : 'chaussure'})
+    return render_template("enfant.html", enfant=enfant)
+
+
+
 @app.route("/accessoire")
 def accessoire():
     db_accessoire = mongo.db.accessoire
     accessoire = db_accessoire.find({})
     return render_template("accessoire.html", accessoire=accessoire)
+
+#SOUS CATEGORIES ACCESSOIRE 
+
+@app.route("/accessoire/montre")
+def accessoire_montre():
+    db_enfant = mongo.db.enfant
+    enfant = db_enfant.find_one({'categorie' : 'chaussure'})
+    return render_template("enfant.html", enfant=enfant)
 
 # ASSISTANCE
 @app.route("/assistance")
