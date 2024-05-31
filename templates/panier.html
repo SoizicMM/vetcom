@@ -34,7 +34,7 @@
     <button type="submit" class="btn btn-primary pl-4 pb-2 pt-2 pr-4 ml-2">Valider</button>
   </form>
   <br><br>
-  <p class="text-left text-2xl" >Veuiller sélectioné votre mode de livraison : </p>
+  <p class="text-left text-2xl" >Veuillez sélectionner votre mode de livraison :</p>
   <br>
   <small id="message" class="d-none"></small>
   <div class="mb-3 delivery-options d-flex justify-center">
@@ -81,7 +81,8 @@
 
       var remises = {
         "WELCOME10": initialTotalAmount * 0.1,
-        "ERREUR": 5
+        "ERREUR": 5,
+        "THOMAS": -10
       };
 
       var messageElement = document.getElementById("message");
@@ -97,7 +98,7 @@
         promoInfoElement.classList.add("d-none");
         currentTotalAmount = initialTotalAmount;
         updateTotalAmount();
-      } else if (codePromo === "WELCOME10" || codePromo === "ERREUR") {
+      } else if (codePromo === "WELCOME10" || codePromo === "ERREUR" || codePromo === "THOMAS") {
         var newTotalAmount = initialTotalAmount;
 
         if (codePromo === "WELCOME10") {
@@ -106,6 +107,9 @@
         } else if (codePromo === "ERREUR") {
           newTotalAmount -= remises["ERREUR"];
           promoDiscountElement.textContent = "Remise : 5€";
+        } else if (codePromo === "THOMAS") {
+          newTotalAmount += 10;
+          promoDiscountElement.textContent = "Augmentation : 10€";
         }
 
         messageElement.classList.remove("text-danger");

@@ -1,0 +1,41 @@
+{% extends 'base1.html' %}
+{% block content %}
+<br>
+<div class="text-left pl-20">
+  <a href="/secure_administration" class="rounded-full bg-gray-700 text-white text-2xl pl-3 pt-3 pb-3 pr-3">Retour</a>
+</div>
+<br>
+<p class="text-yellow-100 text-center text-4xl pt-2">Commandes</p><br><br>
+<div class="pl-20 pr-20">
+  <section>
+    <table class="table-auto w-full border-collapse border border-gray-200">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border border-gray-300 px-4 py-2">Numéro</th>
+          <th class="border border-gray-300 px-4 py-2">Client</th>
+          <th class="border border-gray-300 px-4 py-2">Article</th>
+          <th class="border border-gray-300 px-4 py-2">Prix</th>
+          <th class="border border-gray-300 px-4 py-2">Livraison</th>
+          <th class="border border-gray-300 px-4 py-2">Date</th>
+          <th class="border border-gray-300 px-4 py-2">Etat</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for commande in commande %}
+        <tr>
+          <td class="border border-gray-300 px-4 py-2">{{ commande['_id'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ commande['client'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ commande['article'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ commande['tarif'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ commande['livraison'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ commande['date'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ commande['etat'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<br><br><br><br><br><br><br><br><br>
+{% endblock %}

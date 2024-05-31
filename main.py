@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, url_for, redirect, session
 import pymongo
 import os
 import bcrypt
+from datetime import datetime
+from pymongo import MongoClient
 
 app = Flask("Vetcom")
 mongo = pymongo.MongoClient(os.getenv("MONGO_KEY"))
@@ -67,11 +69,10 @@ def logout():
 def categories():
     return render_template("categories.html")
 
-@app.route("/panier")
-def panier():
-    db_enfant = mongo.db.enfant
-    enfant = db_enfant.find({})
-    return render_template("panier.html", enfant=enfant)
+@app.route("/search")
+def search():
+    return render_template("404.html")
+
 
 # CATEGORIES 
 @app.route("/femme")
@@ -204,12 +205,7 @@ def assistance():
 def validation():
     return render_template("validation.html")
 
-@app.route("/payment", methods=["GET", "POST"])
-def payment():
-    if request.method == "POST":
-        total_amount = request.form.get('totalAmount', default="0")
-        return render_template("payment.html", total_amount=total_amount)
-    return render_template("cart.html")
+
 
 @app.route('/adm')
 def adm_page():
@@ -222,6 +218,20 @@ def settings():
 @app.route("/cookies")
 def cookies():
     return render_template("cookies.html")
+
+
+
+
+#PANIER
+
+@app.route("/payment", methods=["GET", "POST"])
+def payment():
+    if request.method == "POST":
+        total_amount = request.form.get('totalAmount', default="0")
+        return render_template("payment.html", total_amount=total_amount)
+    return render_template("cart.html")
+
+
 
 
 
@@ -281,6 +291,31 @@ def secure_administration():
     db_commande = mongo.db.commande
     commande = db_commande.find({})
     return render_template('/administrationadmin.html', message=message, commande=commande)
+
+@app.route('/messagerie')
+def messagerie():
+    # Code pour la page d'administration sécurisée
+    db_message = mongo.db.message
+    message = db_message.find({})
+    return render_template('/messagerie.html', message=message)
+
+@app.route('/commande')
+def commande():
+    # Code pour la page d'administration sécurisée
+    db_commande = mongo.db.commande
+    commande = db_commande.find({})
+    return render_template('/commande.html', commande=commande)
+
+
+
+@app.route("/panier")
+def panier():
+    db_enfant = mongo.db.enfant
+    enfant = db_enfant.find({})
+    return render_template("panier.html", enfant=enfant)
+
+
+
 
 
 
