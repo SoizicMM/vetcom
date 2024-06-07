@@ -353,7 +353,7 @@ def femmeadmin():
     femme = db_femme.find({})
     return render_template('/femmeadmin.html', femme=femme)
 
-
+"""
 @app.route('/update_femme/<femme_id>', methods=['GET'])
 def show_update_form(femme_id):
     db_femme = mongo.db.femme
@@ -368,7 +368,7 @@ def update_femme(femme_id):
         'prix': request.form['prix']
     }
     db_femme.update_one({'_id': ObjectId(femme_id)}, {'$set': updated_femme})
-    return redirect(url_for('femme'))
+    return redirect(url_for('femme'))"""
 ######################################################################################
 ######################################################################################
 
@@ -384,7 +384,15 @@ def hommeadmin():
 
 ######################################################################################
 ######################################################################################
-######################################################################################
+
+@app.route('/accessoireadmin')
+def accessoireadmin():
+    # Code pour la page d'administration sécurisée
+    db_accessoire = mongo.db.accessoire
+    accessoire = db_accessoire.find({})
+    return render_template('/accessoireadmin.html', accessoire=accessoire)
+
+
 ######################################################################################
 ######################################################################################
 if __name__ == '__main__':
