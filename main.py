@@ -4,6 +4,8 @@ import os
 import bcrypt
 from datetime import datetime
 from pymongo import MongoClient
+from bson import ObjectId
+
 
 app = Flask("Vetcom")
 mongo = pymongo.MongoClient(os.getenv("MONGO_KEY"))
@@ -232,14 +234,21 @@ def payment():
     return render_template("cart.html")
 
 
+@app.route("/panier")
+def panier():
+    db_enfant = mongo.db.enfant
+    enfant = db_enfant.find({})
+    return render_template("panier.html", enfant=enfant)
 
 
 
 
-
-
-
-# ADMINISTRATION
+######################################################################################
+######################################################################################
+######################################################################################
+######################################################################################
+######################################################################################
+###############################ADMINISTRATION#########################################
 @app.route("/envoyer_message", methods=["POST"])
 def envoyer_message():
     try:
@@ -292,12 +301,38 @@ def secure_administration():
     commande = db_commande.find({})
     return render_template('/administrationadmin.html', message=message, commande=commande)
 
+
+######################################################################################
+######################################################################################
 @app.route('/messagerie')
 def messagerie():
     # Code pour la page d'administration sécurisée
     db_message = mongo.db.message
     message = db_message.find({})
     return render_template('/messagerie.html', message=message)
+
+@app.route('/update_lieu/<message_id>', methods=['GET'])
+def show_update_form(message_id):
+    db_message = mongo.db.message
+    message = db_message.find_one({'_id': ObjectId(message_id)})
+    return render_template('update.html', message=message)
+
+@app.route('/update_lieu/<message_id>', methods=['POST'])
+def update_message(message_id):
+    db_message = mongo.db.message
+    updated_message = {
+        'nom': request.form['nom'],
+        'prenom': request.form['prenom'],
+        'email': request.form['email'],
+        'objet': request.form['objet'],
+        'texte': request.form['texte'],
+        'date_envoi': request.form['date_envoi']
+    }
+    db_message.update_one({'_id': ObjectId(message_id)}, {'$set': updated_message})
+    return redirect(url_for('messagerie'))
+
+######################################################################################
+######################################################################################
 
 @app.route('/commande')
 def commande():
@@ -307,24 +342,50 @@ def commande():
     return render_template('/commande.html', commande=commande)
 
 
-
-@app.route("/panier")
-def panier():
-    db_enfant = mongo.db.enfant
-    enfant = db_enfant.find({})
-    return render_template("panier.html", enfant=enfant)
+######################################################################################
+######################################################################################
 
 
+@app.route('/femmeadmin')
+def femmeadmin():
+    # Code pour la page d'administration sécurisée
+    db_femme = mongo.db.femme
+    femme = db_femme.find({})
+    return render_template('/femmeadmin.html', femme=femme)
+
+
+@app.route('/update_femme/<femme_id>', methods=['GET'])
+def show_update_form(femme_id):
+    db_femme = mongo.db.femme
+    femme = db_femme.find_one({'_id': ObjectId(femme_id)})
+    return render_template('femmeadmin.html', femme=femme)
+
+@app.route('/update_lieu/<femme_id>', methods=['POST'])
+def update_femme(femme_id):
+    db_femme = mongo.db.femme
+    updated_femme = {
+        'titre': request.form['titre'],
+        'prix': request.form['prix']
+    }
+    db_femme.update_one({'_id': ObjectId(femme_id)}, {'$set': updated_femme})
+    return redirect(url_for('femme'))
+######################################################################################
+######################################################################################
+
+
+@app.route('/hommeadmin')
+def hommeadmin():
+    # Code pour la page d'administration sécurisée
+    db_homme = mongo.db.homme
+    homme = db_homme.find({})
+    return render_template('/hommeadmin.html', homme=homme)
 
 
 
-
-
-
-
-
-
-
-
+######################################################################################
+######################################################################################
+######################################################################################
+######################################################################################
+######################################################################################
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=3904)

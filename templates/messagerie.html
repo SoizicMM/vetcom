@@ -17,6 +17,8 @@
             <th class="border border-gray-300 px-4 py-2">Objet</th>
             <th class="border border-gray-300 px-4 py-2">Corps du message</th>
             <th class="border border-gray-300 px-4 py-2">Date</th>
+            <th class="border border-gray-300 px-4 py-2">Modifier</th>
+            <th class="border border-gray-300 px-4 py-2">Supprimer</th>
           </tr>
         </thead>
         <tbody>
@@ -28,6 +30,9 @@
             <td class="border border-gray-300 px-4 py-2">{{ message['objet'] }}</td>
             <td class="border border-gray-300 px-4 py-2">{{ message['texte'] }}</td>
             <td class="border border-gray-300 px-4 py-2">{{ message['date_envoi'] }}</td>
+            <td class="border border-gray-300 px-4 py-2"><a href="/update_lieu/{{ message['_id'] }}">modifier</a></td>
+            <td class="border border-gray-300 px-4 py-2"><a href="/delete_lieu/{{ message['_id'] }}">supprimer</a></td>
+
           </tr>
           {% endfor %}
         </tbody>
