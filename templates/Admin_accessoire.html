@@ -1,0 +1,41 @@
+{% extends 'base1.html' %}
+{% block content %}
+<br>
+<div class="text-left pl-20">
+  <a href="/secure_administration" class="rounded-full bg-gray-700 text-white text-2xl pl-3 pt-3 pb-3 pr-3">Retour</a>
+</div>
+<br>
+<p class="text-yellow-100 text-center text-4xl pt-2">accessoire</p><br><br>
+<div class="pl-20 pr-20">
+  <section>
+    <table class="table-auto w-full border-collapse border border-gray-200">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border border-gray-300 px-4 py-2">Id</th>
+          <th class="border border-gray-300 px-4 py-2">Titre</th>
+          <th class="border border-gray-300 px-4 py-2">Prix</th>
+          <th class="border border-gray-300 px-4 py-2">Description</th>
+          <th class="border border-gray-300 px-4 py-2">Sku</th>
+          <th class="border border-gray-300 px-4 py-2">Image</th>
+          <th class="border border-gray-300 px-4 py-2">Catégorie</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for accessoire in accessoire %}
+        <tr>
+          <td class="border border-gray-300 px-4 py-2">{{ accessoire['_id'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ accessoire['titre'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ accessoire['prix'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ accessoire['description'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ Accessoire['sku'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ Accessoire['image'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ Accessoire['categorie'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<br><br><br><br><br><br><br><br><br>
+{% endblock %}
