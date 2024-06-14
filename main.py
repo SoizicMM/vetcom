@@ -66,136 +66,31 @@ def logout():
     session.pop('util', None)
     return redirect(url_for("index"))
 
-# FRONT
-@app.route("/categories")
-def categories():
-    return render_template("categories.html")
-
-@app.route("/search")
-def search():
-    return render_template("404.html")
-
-
 # CATEGORIES 
 @app.route("/femme")
 def femme():
     db_femme = mongo.db.femme
     femme = db_femme.find({})
     return render_template("femme.html", femme=femme)
-
-#SOUS CATEGORIE FEMME
-
-@app.route("/femme/teeshirt")
-def femme_teeshirt():
-    db_femme = mongo.db.femme
-    femme = db_femme.find_one({'categorie' : 'tee-shirt'})
-    return render_template("femme.html", femme=femme)
-
-@app.route("/femme/pantalon")
-def femme_pantalon():
-    db_femme = mongo.db.femme
-    femme = db_femme.find_one({'categorie' : 'pantalon'})
-    return render_template("femme.html", femme=femme)
-
-
-@app.route("/femme/pull")
-def femme_pull():
-    db_femme = mongo.db.femme
-    femme = db_femme.find_one({'categorie' : 'pull'})
-    return render_template("femme.html", femme=femme)
-
-@app.route("/femme/accessoire")
-def femme_accessoire():
-    db_femme = mongo.db.femme
-    femme = db_femme.find_one({'categorie' : 'chaussure'})
-    return render_template("femme.html", femme=femme)
-   
-
-
-
-
+    
 @app.route("/homme")
 def homme():
     db_homme = mongo.db.homme
     homme = db_homme.find({})
     return render_template("homme.html", homme=homme)
-
-#SOUS CATEGORIE HOMME 
-
-
-@app.route("/homme/teeshirt")
-def homme_teeshirt():
-    db_homme = mongo.db.homme
-    homme = db_homme.find_one({'categorie' : 'tee-shirt'})
-    return render_template("homme.html", homme=homme)
-
-@app.route("/homme/pantalon")
-def homme_pantalon():
-    db_homme = mongo.db.homme
-    homme = db_homme.find_one({'categorie' : 'pantalon'})
-    return render_template("homme.html", homme=homme)
-
-@app.route("/homme/pull")
-def homme_pull():
-    db_homme = mongo.db.homme
-    homme = db_homme.find_one({'categorie' : 'pull'})
-    return render_template("homme.html", homme=homme)
-
-@app.route("/homme/chaussure")
-def homme_chaussure():
-    db_homme = mongo.db.homme
-    homme = db_homme.find_one({'categorie' : 'chaussure'})
-    return render_template("homme.html", homme=homme)
-
-
-
+    
 @app.route("/enfant")
 def enfant():
     db_enfant = mongo.db.enfant
     enfant = db_enfant.find({})
     return render_template("enfant.html", enfant=enfant)
-
-#SOUS CATEGORIES ENFANT
-
-@app.route("/enfant/teeshirt")
-def enfant_teeshirt():
-    db_enfant = mongo.db.enfant
-    enfant = db_enfant.find_one({'categorie' : 'tee-shirt'})
-    return render_template("enfant.html", enfant=enfant)
-
-@app.route("/enfant/pantalon")
-def enfant_pantalon():
-    db_enfant = mongo.db.enfant
-    enfant = db_enfant.find_one({'categorie' : 'pantalon'})
-    return render_template("enfant.html", enfant=enfant)
-
-@app.route("/enfant/pull")
-def enfant_pull():
-    db_enfant = mongo.db.enfant
-    enfant = db_enfant.find_one({'categorie' : 'pull'})
-    return render_template("enfant.html", enfant=enfant)
-
-@app.route("/enfant/chaussure")
-def enfant_chaussure():
-    db_enfant = mongo.db.enfant
-    enfant = db_enfant.find_one({'categorie' : 'chaussure'})
-    return render_template("enfant.html", enfant=enfant)
-
-
-
+    
 @app.route("/accessoire")
 def accessoire():
     db_accessoire = mongo.db.accessoire
     accessoire = db_accessoire.find({})
     return render_template("accessoire.html", accessoire=accessoire)
 
-#SOUS CATEGORIES ACCESSOIRE 
-
-@app.route("/accessoire/montre")
-def accessoire_montre():
-    db_enfant = mongo.db.enfant
-    enfant = db_enfant.find_one({'categorie' : 'chaussure'})
-    return render_template("enfant.html", enfant=enfant)
 
 # ASSISTANCE
 @app.route("/assistance")
@@ -237,9 +132,9 @@ def payment():
 @app.route("/panier")
 def panier():
     db_enfant = mongo.db.enfant
-    enfant = db_enfant.find({})
-    return render_template("panier.html", enfant=enfant)
-
+    article = db_enfant.find({})  # Récupération de tous les articles du panier depuis MongoDB
+    initialTotalAmount = 0  # Initialisez ici le montant total initial si nécessaire
+    return render_template("panier.html", article=article, initialTotalAmount=initialTotalAmount)
 
 
 
@@ -331,17 +226,54 @@ def update_message(message_id):
     db_message.update_one({'_id': ObjectId(message_id)}, {'$set': updated_message})
     return redirect(url_for('messagerie'))
 
+@app.route('/delete_lieu/<message_id>', methods=['POST'])
+def delete_message(message_id):
+    db_message = mongo.db.message
+    db_message.delete_one({'_id': ObjectId(message_id)})
+    return redirect(url_for('messagerie'))
 ######################################################################################
 ######################################################################################
 
 @app.route('/commande')
 def commande():
-    # Code pour la page d'administration sécurisée
     db_commande = mongo.db.commande
     commande = db_commande.find({})
-    return render_template('/commande.html', commande=commande)
+    return render_template('commande.html', commande=commande)
 
+@app.route('/update_commande/<commande_id>', methods=['GET'])
+def show_update_commande_form(commande_id):
+    db_commande = mongo.db.commande
+    commande = db_commande.find_one({'_id': ObjectId(commande_id)})
+    return render_template('update_commande.html', commande=commande)
 
+@app.route('/update_commande/<commande_id>', methods=['POST'])
+def update_commande(commande_id):
+    db_commande = mongo.db.commande
+    updated_commande = {
+        'client': request.form['client'],
+        'article': request.form['article'],
+        'tarif': request.form['tarif'],
+        'livraison': request.form['livraison'],
+        'date': request.form['date'],
+        'etat': request.form['etat']
+    }
+    db_commande.update_one({'_id': ObjectId(commande_id)}, {'$set': updated_commande})
+    return redirect(url_for('commande'))
+
+@app.route('/delete_commande/<commande_id>', methods=['POST'])
+def delete_commande(commande_id):
+    db_commande = mongo.db.commande
+    db_commande.delete_one({'_id': ObjectId(commande_id)})
+    return redirect(url_for('commande'))
+
+######################################################################################
+######################################################################################
+
+@app.route('/client')
+def client():
+    db_utilisateurs = mongo.db.utilisateurs
+    utilisateurs = db_utilisateurs.find({})
+    return render_template('client.html', utilisateurs=utilisateurs)
 ######################################################################################
 ######################################################################################
 
@@ -352,23 +284,7 @@ def femmeadmin():
     db_femme = mongo.db.femme
     femme = db_femme.find({})
     return render_template('/femmeadmin.html', femme=femme)
-
-"""
-@app.route('/update_femme/<femme_id>', methods=['GET'])
-def show_update_form(femme_id):
-    db_femme = mongo.db.femme
-    femme = db_femme.find_one({'_id': ObjectId(femme_id)})
-    return render_template('femmeadmin.html', femme=femme)
-
-@app.route('/update_lieu/<femme_id>', methods=['POST'])
-def update_femme(femme_id):
-    db_femme = mongo.db.femme
-    updated_femme = {
-        'titre': request.form['titre'],
-        'prix': request.form['prix']
-    }
-    db_femme.update_one({'_id': ObjectId(femme_id)}, {'$set': updated_femme})
-    return redirect(url_for('femme'))"""
+    
 ######################################################################################
 ######################################################################################
 
@@ -395,5 +311,13 @@ def accessoireadmin():
 
 ######################################################################################
 ######################################################################################
+@app.route("/article/<string:article_id>")
+def article_detail(article_id):
+    db_homme = mongo.db.homme
+    article = db_homme.find_one({'_id': ObjectId(article_id)})
+    return render_template("article.html", article=article)
+
+
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=3904)

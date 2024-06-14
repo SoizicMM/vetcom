@@ -1,0 +1,44 @@
+{% extends 'base1.html' %}
+{% block content %}
+<div class="container mx-auto">
+    <h1 class="text-4xl text-center py-4">Modifier la Commande</h1>
+    <form action="/update_commande/{{ commande._id }}" method="POST">
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="client">Client</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="client" name="client" type="text" value="{{ commande.client }}">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="article">Article</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="article" name="article" type="text" value="{{ commande.article }}">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="tarif">Prix</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tarif" name="tarif" type="text" value="{{ commande.tarif }}">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="livraison">Livraison</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="livraison" name="livraison" type="text" value="{{ commande.livraison }}">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="date">Date</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="date" name="date" type="text" value="{{ commande.date }}">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="etat">Etat</label>
+            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="etat" name="etat">
+                <option value="en attente" {% if commande.etat == 'en attente' %}selected{% endif %}>en attente</option>
+                <option value="payé" {% if commande.etat == 'payé' %}selected{% endif %}>payé</option>
+                <option value="expédié" {% if commande.etat == 'expédié' %}selected{% endif %}>expédié</option>
+                <option value="terminer" {% if commande.etat == 'terminer' %}selected{% endif %}>terminer</option>
+                <option value="rembourser" {% if commande.etat == 'rembourser' %}selected{% endif %}>rembourser</option>
+            </select>
+        </div><br><br>
+        <div class="flex items-center justify-between">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                Modifier
+            </button>
+        </div>
+    </form>
+</div>
+<br><br>
+{% endblock %}
