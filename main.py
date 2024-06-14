@@ -21,7 +21,7 @@ def index():
 @app.errorhandler(404)
 def not_found_error(error):
     return render_template('404.html'), 404
-    
+
 # UTILISATEURS
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -109,7 +109,7 @@ def femme_accessoire():
     db_femme = mongo.db.femme
     femme = db_femme.find_one({'categorie' : 'chaussure'})
     return render_template("femme.html", femme=femme)
-   
+
 
 
 
@@ -353,6 +353,34 @@ def femmeadmin():
     femme = db_femme.find({})
     return render_template('/femmeadmin.html', femme=femme)
 
+
+
+@app.route('/hommeadmin')
+def hommeadmin():
+    # Code pour la page d'administration sécurisée
+    db_homme = mongo.db.homme
+    homme = db_homme.find({})
+    return render_template('/hommeadmin.html', homme=homme)
+
+@app.route('/enfantadmin')
+def enfantadmin():
+    # Code pour la page d'administration sécurisée
+    db_enfant = mongo.db.enfant
+    enfant = db_enfant.find({})
+    return render_template('/enfantadmin.html', enfant=enfant)
+
+######################################################################################
+######################################################################################
+
+@app.route('/accessadmin')
+def accessadmin():
+    # Code pour la page d'administration sécurisée
+    db_accessoire = mongo.db.accessoire
+    accessoire = db_accessoire.find({})
+    return render_template('/accessadmin.html', accessoire=accessoire)
+
+
+
 """
 @app.route('/update_femme/<femme_id>', methods=['GET'])
 def show_update_form(femme_id):
@@ -373,24 +401,7 @@ def update_femme(femme_id):
 ######################################################################################
 
 
-@app.route('/hommeadmin')
-def hommeadmin():
-    # Code pour la page d'administration sécurisée
-    db_homme = mongo.db.homme
-    homme = db_homme.find({})
-    return render_template('/hommeadmin.html', homme=homme)
 
-
-
-######################################################################################
-######################################################################################
-
-@app.route('/accessoireadmin')
-def accessoireadmin():
-    # Code pour la page d'administration sécurisée
-    db_accessoire = mongo.db.accessoire
-    accessoire = db_accessoire.find({})
-    return render_template('/accessoireadmin.html', accessoire=accessoire)
 
 
 ######################################################################################
