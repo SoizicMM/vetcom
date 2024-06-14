@@ -1,40 +1,292 @@
-
 {% extends 'base.html' %}
 
 {% block content %}
-<section>
-  {% for article in article%}
-    <br><br>
-    <div class="product-info-container pl-20 pr-20">
-      <div class="product-image" style="flex: 1;">
-        <img src="{{article['image']}}" style="width:100%;height:600px;">
-      </div>
-      <div class="product-info text-2xl" style="flex: 2;">
-        <br><br> 
-        <p class="text-5xl">{{article['titre']}} {{article['prix']}} €</p><br>
-        <p class="text-sm">Quantité restante : {{article['sku']}}</p>
-        <br><br><br>
-        <form action="/panier" method="post">
-          <label for="quantity">Quantité :</label>
-          <input type="number" id="quantity" name="quantity" min="1" max="10" value="1">
-          <br><br>
-          <input type="submit" class="bg-red-400 pl-5 pt-3 pr-5 pb-3 rounded-full" value="Ajouter au panier"><br><br><br>
-        </form>
-        <p class="pb-3">Selectionner votre taille : </p>
-        <a class="taille-produit bg-stone-400 pl-4 pt-2 pr-4 pb-2">XS</a>
-        <a class="taille-produit bg-stone-400 pl-4 pt-2 pr-4 pb-2"> S</a>
-        <a class="taille-produit bg-stone-400 pl-3 pt-2 pr-4 pb-2"> M</a>
-        <a class="taille-produit bg-stone-400 pl-4 pt-2 pr-4 pb-2"> L</a>
-        <a class="taille-produit bg-stone-400 pl-4 pt-2 pr-4 pb-2">XL</a>
-        <br><br>
-      </div>
-    </div>
-  <br>
-  <div class="text-l pl-10 pr-10 text-left">
-    <p class="text-xl">Description de l'article :</p><br>
-    <p>{{article['description']}}</p><br>
+<div class="container mx-auto py-4">
+  <h1 class="text-black text-3xl">Mon panier</h1>
+  <div class="text-end mb-2">
+    <a href="/" class="underline">Continuer mes achats</a><br><br>
   </div>
-    <br>
-  {% endfor%}
-</section>
+
+  <div class="d-flex justify-between border-b-2 border-gray-400 py-2">
+    <p>Article(s)</p>
+    <p class="text-end pr-8">Prix</p>
+  </div>
+
+  {% for enfant in enfant %}
+  <br>
+  <div class="d-flex justify-between mb-5 py-2 border-b border-gray-300">
+    <img src="{{ enfant['image'] }}" style="width: 150px; height: 150px;" class="mr-4">
+    <p class="text-xl flex-grow">{{ enfant['titre'] }}</p>
+    <p class="text-2xl text-end">{{ enfant['prix'] }} €</p>
+  </div>
+  {% endfor %}
+
+  <div id="promoInfo" class="mb-3 d-none">
+    <p id="promoCode" class="text-end"></p>
+    <p id="promoDiscount" class="text-end"></p>
+  </div>
+
+  <form id="promoForm" class="d-flex align-items-center mb-3">
+    <div class="form-group mb-2">
+      <label for="code_promo" class="col-form-label pr-3">Code promo :</label>
+      <input type="text" class="form-control pl-1 bg-slate-200" id="code_promo" name="code_promo" placeholder="Insérer un code promo" minlength="0" maxlength="20" size="20">
+    </div>
+    <button type="submit" class="btn btn-primary pl-4 pb-2 pt-2 pr-4 ml-2">Valider</button>
+  </form>
+  <br><br>
+  <p class="text-left text-2xl" >Veuillez sélectionner votre mode de livraison :</p>
+  <br>
+  <small id="message" class="d-none"></small>
+  <div class="mb-3 delivery-options d-flex justify-center">
+    <div class="delivery-option" data-delivery="retrait" data-delivery-time="1 jour">
+      <input type="radio" id="retrait" name="delivery_option" value="retrait" class="d-none">
+      <label for="retrait">
+        <img src="https://img.myloview.fr/posters/logo-retrait-en-magasin-700-252087864.jpg" alt="Retrait en magasin" class="delivery-img">
+      </label>
+    </div>
+    <div class="delivery-option" data-delivery="mondial" data-delivery-time="5-7 jours">
+      <input type="radio" id="mondial" name="delivery_option" value="mondial" class="d-none">
+      <label for="mondial">
+        <img src="https://upload.wikimedia.org/wikipedia/fr/1/19/Mondial_Relay.svg" alt="Mondial Relay" class="delivery-img">
+      </label>
+    </div>
+    <div class="delivery-option" data-delivery="colissimo" data-delivery-time="3-5 jours">
+      <input type="radio" id="colissimo" name="delivery_option" value="colissimo" class="d-none">
+      <label for="colissimo">
+        <img src="https://florafeminae.com/app/uploads/2023/02/Web-Ready-Small-Colissimo-icon1.jpg" alt="Colissimo" class="delivery-img">
+      </label>
+    </div>
+  </div>
+
+  <p class="text-end pr-8 mt-3">Livraison: <span id="deliveryType">Aucune sélectionnée</span></p>
+  <p class="text-end pr-8 mt-3">Temps estimé de livraison: <span id="deliveryTime">Non spécifié</span></p>
+
+  <p class="text-end pr-8 total mt-3">Total (sans frais de livraison) : <span id="totalSansLivraison">20€</span></p><br><br>
+  <p class="text-3xl text-end pr-8 total mt-3">Total : <span id="totalAmount">20€</span></p><br>
+  <div class="text-end pr-8">
+    <form id="paymentForm" action="/payment" method="POST">
+      <input type="hidden" id="hiddenTotalAmount" name="totalAmount" value="20">
+      <button type="submit" class="btn btn-payment " id="payButton" disabled>Payer</button>
+    </form>
+  </div>
+
+  <script>
+    var initialTotalAmount = 20;
+    var currentTotalAmount = initialTotalAmount;
+
+    document.getElementById("promoForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      var codePromo = document.getElementById("code_promo").value.trim().toUpperCase();
+
+      var remises = {
+        "WELCOME10": initialTotalAmount * 0.1,
+        "ERREUR": 5,
+        "THOMAS": -10
+      };
+
+      var messageElement = document.getElementById("message");
+      var promoInfoElement = document.getElementById("promoInfo");
+      var promoCodeElement = document.getElementById("promoCode");
+      var promoDiscountElement = document.getElementById("promoDiscount");
+      var totalSansLivraisonElement = document.getElementById("totalSansLivraison");
+      var totalElement = document.getElementById("totalAmount");
+      var hiddenTotalAmountElement = document.getElementById("hiddenTotalAmount");
+
+      if (codePromo.length === 0) {
+        messageElement.classList.add("d-none");
+        promoInfoElement.classList.add("d-none");
+        currentTotalAmount = initialTotalAmount;
+        updateTotalAmount();
+      } else if (codePromo === "WELCOME10" || codePromo === "ERREUR" || codePromo === "THOMAS") {
+        var newTotalAmount = initialTotalAmount;
+
+        if (codePromo === "WELCOME10") {
+          newTotalAmount -= remises["WELCOME10"];
+          promoDiscountElement.textContent = "Remise : 10%";
+        } else if (codePromo === "ERREUR") {
+          newTotalAmount -= remises["ERREUR"];
+          promoDiscountElement.textContent = "Remise : 5€";
+        } else if (codePromo === "THOMAS") {
+          newTotalAmount += 10;
+          promoDiscountElement.textContent = "Augmentation : 10€";
+        }
+
+        messageElement.classList.remove("text-danger");
+        messageElement.classList.add("text-success");
+        messageElement.textContent = "Le code promo a été appliqué.";
+        messageElement.classList.remove("d-none");
+
+        promoInfoElement.classList.remove("d-none");
+        promoCodeElement.textContent = "Code promo : " + codePromo;
+
+        currentTotalAmount = newTotalAmount;
+        totalSansLivraisonElement.textContent = currentTotalAmount.toFixed(2) + "€";
+        updateTotalAmount();
+      } else {
+        messageElement.classList.remove("text-success");
+        messageElement.classList.add("text-danger");
+        messageElement.textContent = "Veuillez indiquer un code promo valide.";
+        messageElement.classList.remove("d-none");
+      }
+    });
+
+    document.querySelectorAll('.delivery-option').forEach(function(option) {
+      option.addEventListener("click", function() {
+        document.querySelectorAll('.delivery-img').forEach(function(img) {
+          img.classList.remove('selected');
+        });
+        this.querySelector('.delivery-img').classList.add('selected');
+        this.querySelector('input[type="radio"]').checked = true;
+        document.getElementById("payButton").disabled = false;
+        updateTotalAmount();
+      });
+    });
+
+    function updateTotalAmount() {
+      var deliveryType = document.querySelector('input[name="delivery_option"]:checked').value;
+      var deliveryTime = document.querySelector('input[name="delivery_option"]:checked').closest('.delivery-option').getAttribute('data-delivery-time');
+      var totalSansLivraisonElement = document.getElementById("totalSansLivraison");
+      var totalElement = document.getElementById("totalAmount");
+      var hiddenTotalAmountElement = document.getElementById("hiddenTotalAmount");
+      var deliveryTypeElement = document.getElementById("deliveryType");
+      var deliveryTimeElement = document.getElementById("deliveryTime");
+
+      var deliveryCosts = {
+        "retrait": 0,
+        "mondial": 5,
+        "colissimo": 4.5
+      };
+
+      var deliveryText = {
+        "retrait": "Retrait en magasin - Gratuit",
+        "mondial": "Mondial Relay - 5€",
+        "colissimo": "Colissimo - 4,5€"
+      };
+
+      var deliveryCost = deliveryCosts[deliveryType];
+      var newTotalAmount = currentTotalAmount + deliveryCost;
+
+      totalSansLivraisonElement.textContent = currentTotalAmount.toFixed(2) + "€";
+      totalElement.textContent = newTotalAmount.toFixed(2) + "€";
+      hiddenTotalAmountElement.value = newTotalAmount.toFixed(2);
+      deliveryTypeElement.textContent = deliveryText[deliveryType];
+      deliveryTimeElement.textContent = deliveryTime;
+    }
+
+    // Check if the cart is empty
+    var cartItems = 1; // Assume this value is dynamically set based on the actual cart content
+    if (cartItems === 0) {
+      document.querySelector('.text-black').insertAdjacentHTML('afterend', '<h2 class="text-center text-3xl mt-5">Mon panier est vide.</h2>');
+      document.querySelector('.total').style.display = 'none';
+      document.querySelector('.btn-payment').style.display = 'none';
+    }
+  </script>
+
+  <style>
+    .text-success {
+      color: #228B22;
+    }
+
+    .text-danger {
+      color: red;
+    }
+
+    .d-flex {
+      display: flex;
+    }
+
+    .align-items-center {
+      align-items: center;
+    }
+
+    .justify-between {
+      justify-content: space-between;
+    }
+
+    .justify-center {
+      justify-content: center;
+    }
+
+    .flex-grow {
+      flex-grow: 1;
+    }
+
+    .btn-primary {
+      background-color: #8a2be2;
+      border-color: #8a2be2;
+      color: white;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #7a1bd1;
+      transform: scale(1.05);
+    }
+
+    .btn-payment {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #8a2be2;
+      border: none;
+      border-radius: 0.25rem;
+      text-decoration: none;
+      text-align: center;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-payment:hover {
+      background-color: #7a1bd1;
+      transform: scale(1.05);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    .delivery-options {
+      border-radius: 0.25rem;
+      padding: 1rem;
+    }
+
+    .delivery-option {
+      display: flex;
+      align-items: center;
+      margin-right: 1rem;
+      cursor: pointer;
+    }
+
+    .delivery-option label {
+      margin-left: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .delivery-img {
+      width: 150px; /* Increase the width */
+      height: auto;
+      opacity: 0.3;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      border: none;
+    }
+
+    .delivery-img.selected {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .d-none {
+      display: none;
+    }
+  </style>
+</div>
 {% endblock %}

@@ -1,19 +1,88 @@
 {% extends 'base.html' %}
 {% block content %}
-<section>
-  {% for homme in homme%}
-    <br><br>
-    <div class="product-info-container pl-20 pr-20">
-      <div class="product-image2" style="flex: 1;">
-        <img src="{{homme['image']}}" style="width:100%;height:600px;">
-        <p class="text-3xl">{{homme['titre']}}</p><br>
-        <p class="text-2xl">{{homme['prix']}} €</p><br>
-        <a href="/panier" class="bg-black text-white pl-5 pt-3 pr-5 pb-3 rounded-full">En savoir plus</a>
+<section class="product-grid">
+  {% for homme in homme %}
+    <div class="product-item">
+      <div class="product-image">
+        <img src="{{ homme['image'] }}" alt="{{ homme['titre'] }}">
       </div>
-      <div class="product-info text-2xl" style="flex: 2;">
+      <div class="product-info">
+        <p class="product-title">{{ homme['titre'] }}</p>
+        <p class="product-price">{{ homme['prix'] }} €</p>
+        <a href="{{ url_for('article_detail', article_id=homme['_id']) }}" class="btn">En savoir plus</a>
       </div>
     </div>
-  <br>
-  {% endfor%}
+  {% endfor %}
 </section>
+<br><br><br>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.product-item {
+  flex: 1 1 calc(25% - 20px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+}
+
+.product-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.product-info {
+  padding: 20px;
+  text-align: center;
+}
+
+.product-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: #333;
+}
+
+</style>
 {% endblock %}

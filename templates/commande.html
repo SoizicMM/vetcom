@@ -18,6 +18,7 @@
           <th class="border border-gray-300 px-4 py-2">Livraison</th>
           <th class="border border-gray-300 px-4 py-2">Date</th>
           <th class="border border-gray-300 px-4 py-2">Etat</th>
+          <th class="border border-gray-300 px-4 py-2">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +31,12 @@
           <td class="border border-gray-300 px-4 py-2">{{ commande['livraison'] }}</td>
           <td class="border border-gray-300 px-4 py-2">{{ commande['date'] }}</td>
           <td class="border border-gray-300 px-4 py-2">{{ commande['etat'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">
+            <a href="/update_commande/{{ commande['_id'] }}">Modifier</a>
+            <form action="/delete_commande/{{ commande['_id'] }}" method="post" style="display:inline;">
+              <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');">Supprimer</button>
+            </form>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
