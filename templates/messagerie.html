@@ -31,8 +31,11 @@
             <td class="border border-gray-300 px-4 py-2">{{ message['texte'] }}</td>
             <td class="border border-gray-300 px-4 py-2">{{ message['date_envoi'] }}</td>
             <td class="border border-gray-300 px-4 py-2"><a href="/update_lieu/{{ message['_id'] }}">modifier</a></td>
-            <td class="border border-gray-300 px-4 py-2"><a href="/delete_lieu/{{ message['_id'] }}">supprimer</a></td>
-
+            <td class="border border-gray-300 px-4 py-2">
+                <form action="/delete_lieu/{{ message['_id'] }}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce message ?');">Supprimer</button>
+                </form>
+            </td>
           </tr>
           {% endfor %}
         </tbody>

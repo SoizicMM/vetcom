@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="static/style.css" rel="stylesheet"/>
+    <title>👕 Ivetcom </title>
+    <style>
+        .product-image {
+            width: 100%;
+            height: 400px; /* Définir une hauteur fixe pour le conteneur de l'image */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-image img {
+            object-fit: contain; /* Afficher l'image en entier sans être coupée */
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="p-5 bg-black text-yellow-100">
+        <a href="/">
+            <img href="/" src="static/images/logo.png" class="pl-2 pt-2 pb-2"/>
+        </a>
+        <nav>
+            <ul class="flex flex-row-reverse space-x-4 space-x-reverse text-xl font-medium">
+                <li><a href="/panier">Panier</a></li>
+                {% if session['util'] %}
+                <li><a class="pl-20" href="/logout">Se déconnecter</a></li>
+                {% else %}
+                <li><a href="/login">Se connecter</a></li>
+                <li><a href="/register">S'inscrire</a></li>
+                <div class="search-container">
+                    {% endif %}
+                    <form action="/search" method="GET">
+                        <input class="text-black pl-2" type="text" placeholder="pull, t shirt, bijoux, ..." name="q" class="search-input">
+                        <button type="submit" class="text-yellow-600 search-button">Rechercher</button>
+                    </form>
+                </div>
+            </ul>
+        </nav>
+    </header>
+    <!-- CODE PROMO -->
+    <section class="bg-[#333] h-12">
+        <p class="text-center text-2xl text-yellow-100 promo" aria-label="Profiter de -10% avec le code WELCOME10"></p>
+    </section>
+    <!-- Contenu principal -->
+    <main class="bg-cover bg-center" style="background-image: url('https://img.freepik.com/vecteurs-premium/conception-couverture-fond-degrade-vert-illustration-vectorielle_797523-908.jpg')"><br><br>
+        <section class="product-detail-container mx-auto p-5 max-w-md bg-white shadow-md rounded-lg">
+            <div class="product-image">
+                <img src="{{ article['image'] }}" alt="Image du produit">
+            </div>
+            <div class="product-info mt-5">
+                <h1 class="product-title text-2xl font-bold mb-3">{{ article['titre'] }} {{ article['prix'] }}€</h1>
+                <form id="add-to-cart-form" action="/panier" method="post" class="mb-5">
+                    <input type="hidden" name="titre" value="{{ article['titre'] }}">
+                    <input type="hidden" name="prix" value="{{ article['prix'] }}">
+                    <input type="hidden" name="image" value="{{ article['image'] }}">
+                    <label for="quantity" class="block mb-2">Quantité :</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" class="border rounded px-2 py-1">
+                    <br><br>
+                    <input type="submit" class="btn-add-to-cart bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" value="Ajouter au panier">
+                </form>
+                <p class="size-selection mb-2">Sélectionner votre taille :</p>
+                <div class="size-options flex space-x-2">
+                    <a class="taille-produit bg-gray-200 hover:bg-gray-300 rounded px-4 py-2 cursor-pointer">XS</a>
+                    <a class="taille-produit bg-gray-200 hover:bg-gray-300 rounded px-4 py-2 cursor-pointer">S</a>
+                    <a class="taille-produit bg-gray-200 hover:bg-gray-300 rounded px-4 py-2 cursor-pointer">M</a>
+                    <a class="taille-produit bg-gray-200 hover:bg-gray-300 rounded px-4 py-2 cursor-pointer">L</a>
+                    <a class="taille-produit bg-gray-200 hover:bg-gray-300 rounded px-4 py-2 cursor-pointer">XL</a>
+                </div>
+            </div>
+        </section>
+        <br><br>
+    </main>
+    
+    <footer class="p-5 bg-black text-yellow-100 text-center" style="display: flex; justify-content: center; align-items: center;">
+        <a style="margin: 0 10px;" href="/administration">Copyright : magicdevs&copy;</a>
+        <p style="margin: 0 10px;">｜</p>
+        <a style="margin: 0 10px;" href="/cookies">Paramètres de cookies</a>
+        <p style="margin: 0 10px;">｜</p>
+        <a style="margin: 0 10px;" href='/assistance'>Contact : ivetcom@gmail.com</a>
+    </footer>
+</body>
+</html>

@@ -5,7 +5,7 @@
   <a href="/secure_administration" class="rounded-full bg-gray-700 text-white text-2xl pl-3 pt-3 pb-3 pr-3">Retour</a>
 </div>
 <br>
-<p class="text-yellow-100 text-center text-4xl pt-2">Homme</p><br><br>
+<p class="text-yellow-100 text-center text-4xl pt-2">Accessoire</p><br><br>
 <div class="pl-20 pr-20">
   <section>
     <table class="table-auto w-full border-collapse border border-gray-200">
@@ -21,18 +21,15 @@
         </tr>
       </thead>
       <tbody>
-        {% for homme in homme %}
+        {% for accessoire in accessoire %}
         <tr>
-          <td class="border border-gray-300 px-4 py-2">{{ homme['_id'] }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ homme['titre'] }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ homme['prix'] }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ homme['description'] }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ homme['sku'] }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ homme['image'] }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ homme['categorie'] }}</td>
-          <td class="border border-slate-300 p-2"><a href="" target="_blank">Voir</a></td>
-          <td class="border border-slate-300 p-2"><a href="">Modifier</a></td>
-          <td class="border border-slate-300 p-2"><a href="">Supprimer</a></td>
+          <td class="border border-gray-300 px-4 py-2">{{ accessoire['_id'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ accessoire['titre'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ accessoire['prix'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ accessoire['description'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ accessoire['sku'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ accessoire['image'] }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ accessoire['categorie'] }}</td>
         </tr>
         {% endfor %}
       </tbody>
